@@ -51,3 +51,4 @@ jobs:
             dist/link_scraper.exe
           draft: false
           prerelease: false
+          overwrite: true
