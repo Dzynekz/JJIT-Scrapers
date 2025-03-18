@@ -37,7 +37,6 @@ log_general = setup_logger("GENERAL", script_id=2)
 log_joboffer = setup_logger("JOB_OFFER", script_id=2)
 log_db = setup_logger("DATABASE", script_id=2)
 
-
 def check_language(skills, language_keywords):
     if not isinstance(skills, list):
         return False
@@ -245,7 +244,6 @@ def mark_links_as_read(offers):
         connection.execute(query, [{"link_name": ln} for ln in link_names])
         connection.commit()
     
-
 links_data = get_new_links()
 job_offers = []
 
