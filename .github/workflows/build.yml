@@ -1,0 +1,46 @@
+name: Build Scraper EXE
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install pyInstaller
+        run: pip install pyinstaller
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright browsers
+        run: playwright install
+
+      - name: Build EXE        
+        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py
+
+      - name: List files in dist
+        run: dir dist
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: data_scraper
+          path: dist/data_scraper.exe
+    
+      - name: Release new version
+        uses: softprops/action-gh-release@v1
+        with:
+          name: "Latest data_scraper"
+          tag_name: latest
+          files: dist/data_scraper.exe
+          draft: false
+          prerelease: false
