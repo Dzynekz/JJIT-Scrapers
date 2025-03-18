@@ -22,7 +22,7 @@ jobs:
         run: pip install -r requirements.txt
         
       - name: Install Playwright Chromium
-        run: PLAYWRIGHT_BROWSERS_PATH=0 playwright install chromium
+        run: playwright install chromium
 
       - name: Build data_scraper EXE        
         run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py

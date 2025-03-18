@@ -21,6 +21,7 @@ else:
     '''
 
 BASE_DIR = os.path.dirname(os.path.abspath(sys.executable)) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))
+PLAYWRIGHT_BROWSERS_PATH=0
 
 BASE_URL = "https://justjoin.it"
 # Definiowanie danych połączenia
