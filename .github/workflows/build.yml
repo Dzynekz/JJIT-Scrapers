@@ -25,10 +25,10 @@ jobs:
         run: playwright install --with-deps
 
       - name: Build data_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji --add-data "$(playwright install --print-browsers-path);playwright/.local-browsers" data_scraper.py
+        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji --add-data "C:\Users\marci\AppData\Local\ms-playwright;playwright/.local-browsers" data_scraper.py
 
       - name: Build link_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc --add-data "$(playwright install --print-browsers-path);playwright/.local-browsers" link_scraper.py
+        run: pyinstaller --onefile --hidden-import=pyodbc --add-data "C:\Users\marci\AppData\Local\ms-playwright;playwright/.local-browsers" link_scraper.py
 
       - name: List files in dist
         run: dir dist
