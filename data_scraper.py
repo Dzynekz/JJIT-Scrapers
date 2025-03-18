@@ -461,7 +461,12 @@ if job_offers:
         "Regular": 3,
         "Advanced": 4,
         "Master": 5,
-        "": 0
+        "": 0,
+        "A2":1,
+        "B1":2,
+        "B2":3,
+        "C1":4,
+        "C2":5
     }
 
     # Usunięcie informacji o strefie czasowej (psuje się w połączeniu z dataframe)
