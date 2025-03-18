@@ -22,13 +22,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Install Playwright browsers
-        run: playwright install
+        run: playwright install --with-deps
 
       - name: Build data_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py
+        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji --add-data "$(playwright install --print-browsers-path);playwright/.local-browsers" data_scraper.py
 
       - name: Build link_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc link_scraper.py
+        run: pyinstaller --onefile --hidden-import=pyodbc --add-data "$(playwright install --print-browsers-path);playwright/.local-browsers" link_scraper.py
 
       - name: List files in dist
         run: dir dist
