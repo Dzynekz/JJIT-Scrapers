@@ -24,23 +24,30 @@ jobs:
       - name: Install Playwright browsers
         run: playwright install
 
-      - name: Build EXE        
+      - name: Build data_scraper EXE        
         run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py
+
+      - name: Build link_scraper EXE        
+        run: pyinstaller --onefile --hidden-import=pyodbc link_scraper.py
 
       - name: List files in dist
         run: dir dist
 
-      - name: Upload EXE artifact
+      - name: Upload EXE artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: data_scraper
-          path: dist/data_scraper.exe
+          name: scrapers
+          path: |
+            dist/data_scraper.exe
+            dist/link_scraper.exe
     
       - name: Release new version
         uses: softprops/action-gh-release@v1
         with:
-          name: "Latest data_scraper"
+          name: "Latest Scrapers"
           tag_name: latest
-          files: dist/data_scraper.exe
+          files: |
+            dist/data_scraper.exe
+            dist/link_scraper.exe
           draft: false
           prerelease: false
