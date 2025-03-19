@@ -724,6 +724,6 @@ if job_offers:
     for offer in job_offers:
         offer["job_offer_id"] = "https://justjoin.it/job-offer/" + offer["job_offer_id"]
 
-    mark_links_as_read(job_offers)
-    job_offers.clear() 
+    mark_links_as_read(job_offers) 
     log_general.info(f"Import do bazy danych zakończony. Liczba dodanych ofert pracy: {len(job_offers)}")
+    job_offers.clear() 
