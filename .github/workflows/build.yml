@@ -27,10 +27,20 @@ jobs:
           playwright install chromium
 
       - name: Build data_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py
+        run: |
+          $env:DB_SERVER="${{ secrets.DB_SERVER }}"
+          $env:DB_DATABASE="${{ secrets.DB_DATABASE }}"
+          $env:DB_USERNAME="${{ secrets.DB_USERNAME }}"
+          $env:DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+          pyinstaller --onefile --hidden-import=pyodbc --collect-data=emoji data_scraper.py
         
-      - name: Build link_scraper EXE        
-        run: pyinstaller --onefile --hidden-import=pyodbc link_scraper.py
+      - name: Build link_scraper EXE     
+        run: |
+          $env:DB_SERVER="${{ secrets.DB_SERVER }}"
+          $env:DB_DATABASE="${{ secrets.DB_DATABASE }}"
+          $env:DB_USERNAME="${{ secrets.DB_USERNAME }}"
+          $env:DB_PASSWORD="${{ secrets.DB_PASSWORD }}"   
+          pyinstaller --onefile --hidden-import=pyodbc link_scraper.py
 
       - name: List files in dist
         run: dir dist
