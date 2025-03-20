@@ -167,5 +167,3 @@ def load_all_offers():
 
 # Uruchomienie funkcji
 load_all_offers()
-
-input('Naciśnij dowolny klawisz, aby wyłączyć konsolę')
