@@ -415,7 +415,7 @@ with sync_playwright() as playwright:
                 error_count += 1
 
             # Job description
-            div_element = page.query_selector("div.MuiBox-root.css-1p81rs")
+            div_element = page.query_selector("div.MuiBox-root.css-rcazos")
             if div_element:
                 job_offer_data["job_description"] = div_element.inner_text()
             else:
