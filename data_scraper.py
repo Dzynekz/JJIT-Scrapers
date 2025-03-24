@@ -17,25 +17,39 @@ import sys
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(sys.executable)) if getattr(sys, 'frozen', False) else os.path.dirname(os.path.abspath(__file__))
+
 PLAYWRIGHT_BROWSERS_PATH=0
+
+# Konfiguracja loggerów
+log_general = setup_logger("GENERAL", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
+log_joboffer = setup_logger("JOB_OFFER", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
+log_db = setup_logger("DATABASE", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
 
 BASE_URL = "https://justjoin.it"
 # Definiowanie danych połączenia
+
 load_dotenv(os.path.join(BASE_DIR, ".env"))
+if not os.path.exists(f"{BASE_DIR}/.env"):
+    log_general.info(f"Brak pliku .env w folderze: {BASE_DIR}")
+    sys.exit(1)
+
 SERVER = os.getenv('DB_SERVER')
 DATABASE = os.getenv('DB_DATABASE')
 USERNAME = os.getenv('DB_USERNAME')
 PASSWORD = os.getenv('DB_PASSWORD')
+log_general.info(f"Wczytana nazwa serwera oraz port: {SERVER}")
+log_general.info(f"Wczytana nazwa bazy danych: {DATABASE}")
+log_general.info(f"Wczytany login: {USERNAME}")
+log_general.info(f"Wczytane hasło: {PASSWORD}")
 
 # Tworzenie łańcucha połączenia z bazą danych
 CONNECTION_STRING = f"mssql+pyodbc://{USERNAME}:{PASSWORD}@{SERVER}/{DATABASE}?driver=ODBC+Driver+17+for+SQL+Server&charset=utf8"
 # Tworzenie silnika połączenia
-engine = create_engine(CONNECTION_STRING, use_setinputsizes=False)
-
-# Konfiguracja loggerów
-log_general = setup_logger("GENERAL", script_id=2)
-log_joboffer = setup_logger("JOB_OFFER", script_id=2)
-log_db = setup_logger("DATABASE", script_id=2)
+try:
+    engine = create_engine(CONNECTION_STRING, use_setinputsizes=False)
+except Exception as e:
+    log_db.error(f"Błąd podczas tworzenia silnika połączenia: {e}")
+    sys.exit(1)
 
 def check_language(skills, language_keywords):
     if not isinstance(skills, list):
