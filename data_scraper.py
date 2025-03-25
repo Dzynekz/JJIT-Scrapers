@@ -21,9 +21,9 @@ BASE_DIR = os.path.dirname(os.path.abspath(sys.executable)) if getattr(sys, 'fro
 PLAYWRIGHT_BROWSERS_PATH=0
 
 # Konfiguracja loggerów
-log_general = setup_logger("GENERAL", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
-log_joboffer = setup_logger("JOB_OFFER", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
-log_db = setup_logger("DATABASE", log_file=f"{BASE_DIR}/data_scraper_logs.txt", script_id=2)
+log_general = setup_logger("GENERAL", script_id=2)
+log_joboffer = setup_logger("JOB_OFFER", script_id=2)
+log_db = setup_logger("DATABASE", script_id=2)
 
 BASE_URL = "https://justjoin.it"
 # Definiowanie danych połączenia
@@ -37,10 +37,6 @@ SERVER = os.getenv('DB_SERVER')
 DATABASE = os.getenv('DB_DATABASE')
 USERNAME = os.getenv('DB_USERNAME')
 PASSWORD = os.getenv('DB_PASSWORD')
-log_general.info(f"Wczytana nazwa serwera oraz port: {SERVER}")
-log_general.info(f"Wczytana nazwa bazy danych: {DATABASE}")
-log_general.info(f"Wczytany login: {USERNAME}")
-log_general.info(f"Wczytane hasło: {PASSWORD}")
 
 # Tworzenie łańcucha połączenia z bazą danych
 CONNECTION_STRING = f"mssql+pyodbc://{USERNAME}:{PASSWORD}@{SERVER}/{DATABASE}?driver=ODBC+Driver+17+for+SQL+Server&charset=utf8"
@@ -476,6 +472,7 @@ if job_offers:
         "Advanced": 4,
         "Master": 5,
         "": 0,
+        "A1":0,
         "A2":1,
         "B1":2,
         "B2":3,
@@ -671,11 +668,9 @@ if job_offers:
         ~job_offers_skills_df['skill_name'].apply(contains_unusual_characters)
     ]
 
-
     job_offers_skills_df['level_number'] = job_offers_skills_df['level_name'].map(level_mapping)
 
     skills_df = job_offers_skills_df[['skill_name']].drop_duplicates().astype('string')
-
 
     levels_df = job_offers_skills_df[['level_name', 'level_number']].drop_duplicates().astype({'level_name': 'string', 'level_number': 'int'})
 
