@@ -308,7 +308,7 @@ with sync_playwright() as playwright:
                 error_count += 1
 
             # Field
-            div_element = page.locator("div.css-1aq4u2o")
+            div_element = page.locator("div.css-13tqxrv")
             if div_element:
                 job_offer_data["field"] = div_element.inner_text()
             else:
