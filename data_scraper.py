@@ -367,6 +367,8 @@ with sync_playwright() as playwright:
                             employment_type_details = employment_type_element.query_selector_all("span")
                             if len(employment_type_details) >= 4:  # Sprawdzamy, czy jest przynajmniej 4 elementy w liście
                                 employment_type_data["employment_type"] = employment_type_details[3].inner_text()
+                                if employment_type_data["employment_type"] is None:
+                                    employment_type_data["employment_type"] = ''
                                 employment_type_data["salary"]["currency"] = employment_type_details[0].inner_text().split()[-1]  # CURRENCY
                                 employment_type_data["salary"]["from"] = employment_type_details[1].inner_text()  # FROM
                                 employment_type_data["salary"]["to"] = employment_type_details[2].inner_text()  # TO
