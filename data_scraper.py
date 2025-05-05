@@ -348,6 +348,7 @@ with sync_playwright() as playwright:
 
             # Employment types
             div_element = page.query_selector("div.MuiBox-root.css-1e1i3li")
+            div_elements = page.query_selector_all("div.MuiBox-root.css-17h1y7k div.MuiBox-root.css-pretdm")
 
             if div_element:
                 div_inner = div_element.query_selector("div.MuiBox-root.css-pu50tq")     
@@ -367,19 +368,30 @@ with sync_playwright() as playwright:
                             employment_type_details = employment_type_element.query_selector_all("span")
                             if len(employment_type_details) >= 4:  # Sprawdzamy, czy jest przynajmniej 4 elementy w liście
                                 employment_type_data["employment_type"] = employment_type_details[3].inner_text()
-                                if employment_type_data["employment_type"] is None:
-                                    employment_type_data["employment_type"] = ''
                                 employment_type_data["salary"]["currency"] = employment_type_details[0].inner_text().split()[-1]  # CURRENCY
                                 employment_type_data["salary"]["from"] = employment_type_details[1].inner_text()  # FROM
                                 employment_type_data["salary"]["to"] = employment_type_details[2].inner_text()  # TO
 
                         employment_types_list.append(employment_type_data)
                 job_offer_data["employment_types"] = employment_types_list
+            elif div_elements:
+                employment_types_list = []
+                employment_type_data = {
+                        "employment_type": "",
+                        "salary": {
+                            "from": None,
+                            "to": None,
+                            "currency": None
+                            }
+                        }
+                if len(div_elements) >= 4:                                      
+                    employment_type_data["employment_type"] = div_elements[2].query_selector("div.MuiBox-root.css-if24yw div.MuiBox-root.css-16numag").inner_text()
+                    employment_types_list.append(employment_type_data)
+                    job_offer_data["employment_types"] = employment_types_list
             else:
                 log_joboffer.error("Nie znaleziono elementu div dla typów zatrudnienia")
                 job_offer_data["employment_types"] = []
-
-
+                
             # Type of work | Experience level | Operating mode
             div_elements = page.query_selector_all("div.MuiBox-root.css-17h1y7k div.MuiBox-root.css-pretdm")
             if len(div_elements) >= 4:
