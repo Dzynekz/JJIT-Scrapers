@@ -308,7 +308,7 @@ with sync_playwright() as playwright:
                 error_count += 1
 
             # Field
-            div_element = page.locator("div.css-13tqxrv")
+            div_element = page.locator("div.css-1bm6ksk")
             if div_element:
                 job_offer_data["field"] = div_element.inner_text()
             else:
@@ -347,9 +347,10 @@ with sync_playwright() as playwright:
                 error_count += 1
 
             # Employment types
-            div_element = page.query_selector("div.MuiBox-root.css-1e1i3li")
             div_elements = page.query_selector_all("div.MuiBox-root.css-17h1y7k div.MuiBox-root.css-pretdm")
-
+            
+            div_element = page.query_selector("div.MuiBox-root.css-1e1i3li")
+            
             if div_element:
                 div_inner = div_element.query_selector("div.MuiBox-root.css-pu50tq")     
                 employment_types_list = []
