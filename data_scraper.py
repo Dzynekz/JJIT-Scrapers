@@ -329,10 +329,10 @@ with sync_playwright() as playwright:
                 error_count += 1
 
             # City
-            div_element = page.query_selector("div.MuiBox-root.css-1un5sk1")
+            div_element = page.query_selector("div.MuiBox-root.css-vc0lhh")
             div_elements2 = page.query_selector_all("div.MuiBox-root.css-mswf74")
             if div_element:
-                city_element = div_element.query_selector("span")
+                city_element = div_element.query_selector("span.css-1o4wo1x")
                 if city_element:
                     job_offer_data["city"] = city_element.inner_text()
                 else:
@@ -346,8 +346,9 @@ with sync_playwright() as playwright:
                 log_joboffer.error("Nie znaleziono elementu div dla miasta")
                 error_count += 1
 
+
             # Employment types
-            div_elements = page.query_selector_all("div.MuiBox-root.css-17h1y7k div.MuiBox-root.css-pretdm")
+            div_elements = page.query_selector_all("div.MuiBox-root.css-1uattmm div.MuiBox-root.css-c76cah")
             
             div_element = page.query_selector("div.MuiBox-root.css-1e1i3li")
             
@@ -386,7 +387,7 @@ with sync_playwright() as playwright:
                             }
                         }
                 if len(div_elements) >= 4:                                      
-                    employment_type_data["employment_type"] = div_elements[2].query_selector("div.MuiBox-root.css-if24yw div.MuiBox-root.css-16numag").inner_text()
+                    employment_type_data["employment_type"] = div_elements[2].query_selector("div.MuiBox-root.css-st6pnm div.MuiBox-root.css-1ihbss1").inner_text()
                     employment_types_list.append(employment_type_data)
                     job_offer_data["employment_types"] = employment_types_list
             else:
@@ -394,11 +395,11 @@ with sync_playwright() as playwright:
                 job_offer_data["employment_types"] = []
                 
             # Type of work | Experience level | Operating mode
-            div_elements = page.query_selector_all("div.MuiBox-root.css-17h1y7k div.MuiBox-root.css-pretdm")
+            div_elements = page.query_selector_all("div.MuiBox-root.css-1uattmm div.MuiBox-root.css-c76cah")
             if len(div_elements) >= 4:
-                job_offer_data["type_of_work"] = div_elements[0].query_selector("div.MuiBox-root.css-if24yw div.MuiBox-root.css-16numag").inner_text()
-                job_offer_data["experience_level"] = div_elements[1].query_selector("div.MuiBox-root.css-if24yw div.MuiBox-root.css-16numag").inner_text()
-                job_offer_data["operating_mode"] = div_elements[3].query_selector("div.MuiBox-root.css-if24yw div.MuiBox-root.css-16numag").inner_text() 
+                job_offer_data["type_of_work"] = div_elements[0].query_selector("div.MuiBox-root.css-st6pnm div.MuiBox-root.css-1ihbss1").inner_text()
+                job_offer_data["experience_level"] = div_elements[1].query_selector("div.MuiBox-root.css-st6pnm div.MuiBox-root.css-1ihbss1").inner_text()
+                job_offer_data["operating_mode"] = div_elements[3].query_selector("div.MuiBox-root.css-st6pnm div.MuiBox-root.css-1ihbss1").inner_text() 
             else:
                 log_joboffer.error("Nie znaleziono elementu div dla typu pracy")
                 error_count += 1
